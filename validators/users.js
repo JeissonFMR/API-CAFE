@@ -26,4 +26,12 @@ const userPutValidator = [
   }
 ]
 
-module.exports = { usersValidator, userPutValidator }
+const userDeleteValidator = [
+  check('id', `The ID is not valid`).isMongoId(),
+  check('id').custom(existUserForId),
+  (req, res, next) => {
+    return validationResults(req, res, next)
+  }
+]
+
+module.exports = { usersValidator, userPutValidator, userDeleteValidator }

@@ -7,7 +7,6 @@ module.exports.UserController = {
 
   getUsers: async (req, res) => {
     try {
-
       const { hasta = 5, desde = 0 } = req.query;
 
       const [total, usuarios] = await Promise.all([
@@ -27,10 +26,8 @@ module.exports.UserController = {
   },
 
   postUsers: async (req, res) => {
-
-
     try {
-      //no permito mas cosas
+      //no permito mas datos
       const { name, email, password, role } = req.body;
       const usuario = new Usuario({ name, email, password, role });
 
@@ -49,6 +46,7 @@ module.exports.UserController = {
     }
 
   },
+
   updateUsers: async (req, res) => {
     try {
       const { params: { id } } = req;
@@ -69,6 +67,17 @@ module.exports.UserController = {
     } catch (error) {
       console.log(error);
       res.status(500).send({ error: 'An error occurred, please contact the Administrator.' })
+    }
+  },
+
+  deleteUsers: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const usuario = await Usuario.findByIdAndUpdate(id, { state: false }, { new: true })
+      res.send(usuario)
+    } catch (error) {
+
     }
   }
 
