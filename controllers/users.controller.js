@@ -73,9 +73,8 @@ module.exports.UserController = {
   deleteUsers: async (req, res) => {
     try {
       const { id } = req.params;
-
       const usuario = await Usuario.findByIdAndUpdate(id, { state: false }, { new: true })
-      res.send(usuario)
+      res.send({ usuario })
     } catch (error) {
 
     }
